@@ -4,16 +4,14 @@ Something about Pokémons
 ### Start
 ```
 yarn install
-yarn develop
+yarn start
 ```
 
 ### Available npm commands
 ```
+yarn start
+yarn build
 yarn test
-yarn test:coverage
-yarn develop
-yarn prod
-yarn clean
 ```
 
 ##### Wireframes
@@ -25,9 +23,7 @@ yarn clean
 
 ##### Techs
 
-React + Redux + reselect
-
-###### Run
+React + Redux + typescript
 
 
 
