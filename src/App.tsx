@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-
+import Pokemons from './containers/Pokemons';
 const logo = require('./logo.svg');
 
 class App extends React.Component {
@@ -10,6 +10,7 @@ class App extends React.Component {
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Something Pokémon</h2>
+          <Pokemons />  
         </div>
       </div>
     );
