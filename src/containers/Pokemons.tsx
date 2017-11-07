@@ -1,21 +1,24 @@
 // import { Pokemons } from '../components/Pokemons';
 import * as React from 'react';
 import { getPokeListAsync } from '../actions';
-import { PokeState } from '../types/index';
-import { connect, Dispatch } from 'react-redux';
-import { Limit, PokeAction } from '../types';
+import { StoreState } from '../types/index';
+import { connect } from 'react-redux';
+import { Limit } from '../types';
+import Pokemon from './Pokemon';
 
 interface Props {
-    data: Array<any>;
-};
+    pokemons: {
+        results: Array<any>
+    };
+}
 
 interface State {
-    limit: number;
-};
+    limit: Limit;
+}
 
 interface DispatchFromProps {
     getPokeList: any;
-};
+}
 
 class Pokemons extends React.Component<Props & DispatchFromProps, State> {
     constructor(props: Props & DispatchFromProps) {
@@ -25,29 +28,39 @@ class Pokemons extends React.Component<Props & DispatchFromProps, State> {
         };
     }
     componentWillMount() {
-        const { getPokeList } = this.props;
         const { limit } = this.state;
-        getPokeList(limit);
+        
+        getPokeListAsync(limit);
     }
-
+    componentWillReceiveProps(nextProps: Props) {
+        console.log(nextProps, this.props, "12313123");
+    }
     render() {
+        const { pokemons: { results } } = this.props;
         return (
             <div className="Pokemons">
-                <div className="greeting">
-                    asdsd
+                <div>
+                {
+                    (results) && results.map(
+                        (pokemon, index) =>
+                            <div>
+                                <Pokemon { ...pokemon } index={index} />
+                            </div>
+                    )
+                }
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = (state: PokeState) => {
+const mapStateToProps = (state: StoreState) => {
   return {
-    data: state.data
+    pokemons: state.pokemons
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<PokeAction>) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     getPokeList: (limit: Limit) => dispatch(getPokeListAsync(limit))
   };
@@ -56,4 +69,4 @@ const mapDispatchToProps = (dispatch: Dispatch<PokeAction>) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Pokemons);
+)(Pokemons as any);

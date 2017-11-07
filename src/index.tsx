@@ -8,12 +8,14 @@ import configureStore from './configure-store';
 import './index.css';
 
 const initialState: StoreState = {
-  data: {},
+  pokemons: {
+    results: []
+  },
   loading: false,
   error: null
 };
 
-const store = configureStore(initialState);
+export const store = configureStore(initialState);
 
 ReactDOM.render(
   <Provider store={store}>

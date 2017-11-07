@@ -1,6 +1,5 @@
 import { StoreState } from './types';
 import thunk from "redux-thunk";
-
 import {
     createStore,
     applyMiddleware,

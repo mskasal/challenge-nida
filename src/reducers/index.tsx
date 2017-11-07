@@ -3,11 +3,16 @@ import { PokeState, PokeAction } from '../types';
 import {
     GET_POKEMON_LIST_BEGIN,
     GET_POKEMON_LIST_SUCCESS,
-    GET_POKEMON_LIST_FAIL
+    GET_POKEMON_LIST_FAIL,
+    GET_POKEMON_IMAGE_BEGIN,
+    GET_POKEMON_IMAGE_SUCCESS,
+    GET_POKEMON_IMAGE_FAIL
 } from '../constants';
 
 const defaultState: PokeState = {
-    data: [],
+    pokemons: {
+        results: []
+    },
     loading: false,
     error: null
 };
@@ -15,23 +20,42 @@ const defaultState: PokeState = {
 function pokeReducer(state: PokeState = defaultState, action: PokeAction): PokeState {
     switch (action.type) {
         case GET_POKEMON_LIST_BEGIN:
-            state.data = [];
-            state.loading = true;
-            break;
+            return {
+                ...state,
+                loading: true
+            }
         case GET_POKEMON_LIST_SUCCESS:
-            state.data = action.payload.data;
-            state.loading = false;
-            break;
+        return {
+            ...state,
+            pokemons: action.payload
+        }
         case GET_POKEMON_LIST_FAIL:
-            state.data = [];
-            state.loading = false;
-            state.error = action.payload.error;
-            break;
+        return {
+            ...state,
+            loading: false
+        }
+        case GET_POKEMON_IMAGE_BEGIN:
+        return {
+            ...state
+        }
+        case GET_POKEMON_IMAGE_SUCCESS:
+        console.log(state)
+        return {
+            ...state,
+            pokemons: {
+                results: [...state.pokemons.results.map((poke: any) => {console.log(poke); if(poke.name === action.payload.pokemon.name) {poke.imageSource = action.payload.image};console.log(poke); return poke;})]
+            }
+        }
+        case GET_POKEMON_IMAGE_FAIL:
+        return {
+            ...state,
+            loading: false
+        }
         default:
-        state = defaultState;
+        return {
+            ...state
+        }
     }
-
-    return state;
 }
 
 export {
